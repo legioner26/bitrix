@@ -7,7 +7,7 @@ use \Bitrix\Main\ModuleManager,
     \Bitrix\Main\EventManager,
     \Bitrix\Main\Entity\Base,
     \Bitrix\Main\Application,
-    \Legioner\Test\SityTestTable,
+    \Legioner\Test\СityTable,
     \Bitrix\Main\Loader;
 
 Loc::loadMessages(__FILE__);
@@ -106,17 +106,17 @@ class legioner_test extends \CModule
     public function InstallDB()
     {
         Loader::includeModule($this->MODULE_ID);
-        if(!Application::getConnection(SityTestTable::getConnectionName())->isTableExists(Base::getInstance('\Legioner\Test\SityTestTable')->getDBTableName())) {
-            Base::getInstance('\Legioner\Test\SityTestTable')->createDbTable();
+        if(!Application::getConnection(СityTable::getConnectionName())->isTableExists(Base::getInstance('\Legioner\Test\СityTable')->getDBTableName())) {
+            Base::getInstance('\Legioner\Test\СityTable')->createDbTable();
             //демо данные
             $resultDemo = json_decode($this->GetPath() . "/demo.json",true);
            if (!empty($resultDemo)) {
                foreach ($resultDemo as $value) {
-                   $result = SityTestTable::add(array(
-                       'SITY_NAME' => $value['SITY_NAME'],
-                       'SITY_PROFIT' => $value['SITY_PROFIT'],
-                       'SITY_EXPENSES' => $value['SITY_EXPENSES'],
-                       'SITY_COUNT' => $value['SITY_COUNT'],
+                   $result = СityTable::add(array(
+                       'СITY_NAME' => $value['СITY_NAME'],
+                       'СITY_PROFIT' => $value['СITY_PROFIT'],
+                       'СITY_EXPENSES' => $value['СITY_EXPENSES'],
+                       'СITY_COUNT' => $value['СITY_COUNT'],
                    ));
                    if ($result->getErrorMessages()) {
                        echo 'Ошибка при добавлении записи: ' . implode(', ', $result->getErrorMessages());
@@ -130,7 +130,7 @@ class legioner_test extends \CModule
     public function UnInstallDB()
     {
         Loader::includeModule($this->MODULE_ID);
-        Application::getConnection(SityTestTable::getConnectionName())->
+        Application::getConnection(SityTable::getConnectionName())->
             queryExecute('drop table if exists'.Base::getInstance('\Legioner\Test\SityTestTable')->getDBTableName());
         Option::delete($this->MODULE_ID);
     }

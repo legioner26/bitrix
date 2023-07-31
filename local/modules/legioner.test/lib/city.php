@@ -8,11 +8,11 @@ use
     Bitrix\Main\ORM\Fields\FloatField,
     Bitrix\Main\ORM\Fields\StringField;
 
-class SityTestTable extends DataManager
+class СityTable extends DataManager
 {
     public static function getTableName()
     {
-        return 'b_sity_test';
+        return 'b_сity_test';
     }
     public static function getConnectionName()
     {
@@ -29,19 +29,19 @@ class SityTestTable extends DataManager
                 ]
             ),
             //Название города
-            new StringField('SITY_NAME',[
+            new StringField('СITY_NAME',[
                 'required' => true
             ]),
             //Доходы
-            new FloatField('SITY_PROFIT',[
+            new FloatField('СITY_PROFIT',[
                 'default' => 0
             ]),
             //Затраты
-            new FloatField('SITY_EXPENSES',[
+            new FloatField('СITY_EXPENSES',[
                 'default' => 0
             ]),
             //Количество жителей
-            new IntegerField('SITY_COUNT',[
+            new IntegerField('СITY_COUNT',[
                 'default' => 0
             ]),
         ];
