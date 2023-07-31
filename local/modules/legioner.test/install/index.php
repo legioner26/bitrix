@@ -7,7 +7,7 @@ use \Bitrix\Main\ModuleManager,
     \Bitrix\Main\EventManager,
     \Bitrix\Main\Entity\Base,
     \Bitrix\Main\Application,
-    \Legioner\Test\СityTable,
+    \Legioner\Test\CityTable,
     \Bitrix\Main\Loader;
 
 Loc::loadMessages(__FILE__);
@@ -17,7 +17,7 @@ if (class_exists('legioner_test'))
 /**
  * @ Class legioner_test
  */
-class legioner_test extends \CModule
+class legioner_test extends CModule
 {
     //   public $exclusionAdminAdminFiles;
 
@@ -106,17 +106,17 @@ class legioner_test extends \CModule
     public function InstallDB()
     {
         Loader::includeModule($this->MODULE_ID);
-        if(!Application::getConnection(СityTable::getConnectionName())->isTableExists(Base::getInstance('\Legioner\Test\СityTable')->getDBTableName())) {
-            Base::getInstance('\Legioner\Test\СityTable')->createDbTable();
+        if(!Application::getConnection(CityTable::getConnectionName())->isTableExists(Base::getInstance('\Legioner\Test\CityTable')->getDBTableName())) {
+            Base::getInstance('\Legioner\Test\CityTable')->createDbTable();
             //демо данные
             $resultDemo = json_decode($this->GetPath() . "/demo.json",true);
            if (!empty($resultDemo)) {
                foreach ($resultDemo as $value) {
-                   $result = СityTable::add(array(
-                       'СITY_NAME' => $value['СITY_NAME'],
-                       'СITY_PROFIT' => $value['СITY_PROFIT'],
-                       'СITY_EXPENSES' => $value['СITY_EXPENSES'],
-                       'СITY_COUNT' => $value['СITY_COUNT'],
+                   $result = CityTable::add(array(
+                       'CITY_NAME' => $value['CITY_NAME'],
+                       'CITY_PROFIT' => $value['CITY_PROFIT'],
+                       'CITY_EXPENSES' => $value['CITY_EXPENSES'],
+                       'CITY_COUNT' => $value['CITY_COUNT'],
                    ));
                    if ($result->getErrorMessages()) {
                        echo 'Ошибка при добавлении записи: ' . implode(', ', $result->getErrorMessages());
@@ -130,8 +130,8 @@ class legioner_test extends \CModule
     public function UnInstallDB()
     {
         Loader::includeModule($this->MODULE_ID);
-        Application::getConnection(SityTable::getConnectionName())->
-            queryExecute('drop table if exists'.Base::getInstance('\Legioner\Test\SityTestTable')->getDBTableName());
+        Application::getConnection(CityTable::getConnectionName())->
+            queryExecute('drop table if exists'.Base::getInstance('\Legioner\Test\CityTable')->getDBTableName());
         Option::delete($this->MODULE_ID);
     }
 
