@@ -1,5 +1,5 @@
 <?php
-
+require_once dirname(dirname(__FILE__)) . "/lib/CityTest.php";
 use \Bitrix\Main\ModuleManager,
     \Bitrix\Main\Localization\Loc,
     \Bitrix\Main\Config as Conf,
@@ -17,7 +17,7 @@ if (class_exists('legion_city'))
 /**
  * @ Class legioner_test
  */
-class legion_city extends CModule
+class legion_city extends \CModule
 {
     //   public $exclusionAdminAdminFiles;
 
