@@ -1,7 +1,6 @@
 <?php
 namespace Legioner\Test;
 
-use Bitrix\Main\ORM\Fields\ScalarField;
 use
     Bitrix\Main\Type,
     Bitrix\Main\ORM\Data\DataManager,
