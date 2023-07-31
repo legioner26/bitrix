@@ -7,6 +7,7 @@ use \Bitrix\Main\ModuleManager,
     \Bitrix\Main\EventManager,
     \Bitrix\Main\Entity\Base,
     \Bitrix\Main\Application,
+    \Legioner\Test\SityTestTable,
     \Bitrix\Main\Loader;
 
 Loc::loadMessages(__FILE__);
@@ -105,15 +106,31 @@ class legioner_test extends \CModule
     public function InstallDB()
     {
         Loader::includeModule($this->MODULE_ID);
-        if(!Application::getConnection(\Legioner\Test\SityTestTable::getConnectionName())->isTableExists(Base::getInstance('\Legioner\Test\SityTestTable')->getDBTableName())) {
+        if(!Application::getConnection(SityTestTable::getConnectionName())->isTableExists(Base::getInstance('\Legioner\Test\SityTestTable')->getDBTableName())) {
             Base::getInstance('\Legioner\Test\SityTestTable')->createDbTable();
+            //демо данные
+            $resultDemo = json_decode($this->GetPath() . "/demo.json",true);
+           if (!empty($resultDemo)) {
+               foreach ($resultDemo as $value) {
+                   $result = SityTestTable::add(array(
+                       'SITY_NAME' => $value['SITY_NAME'],
+                       'SITY_PROFIT' => $value['SITY_PROFIT'],
+                       'SITY_EXPENSES' => $value['SITY_EXPENSES'],
+                       'SITY_COUNT' => $value['SITY_COUNT'],
+                   ));
+                   if ($result->getErrorMessages()) {
+                       echo 'Ошибка при добавлении записи: ' . implode(', ', $result->getErrorMessages());
+                   }
+               }
+           }
+
         }
     }
 
     public function UnInstallDB()
     {
         Loader::includeModule($this->MODULE_ID);
-        Application::getConnection(\Legioner\Test\SityTestTable::getConnectionName())->
+        Application::getConnection(SityTestTable::getConnectionName())->
             queryExecute('drop table if exists'.Base::getInstance('\Legioner\Test\SityTestTable')->getDBTableName());
         Option::delete($this->MODULE_ID);
     }
