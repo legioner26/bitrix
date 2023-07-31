@@ -1,0 +1,4 @@
+<?php
+$MESS["LEGIONER_TEST_STEP_BEFORE"] = "Модуль";
+$MESS["LEGIONER_TEST_STEP_AFTER"] = "установлен";
+$MESS["LEGIONER_TEST_STEP_SUBMIT_BACK"] = "Назад";
