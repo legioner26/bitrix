@@ -1,5 +1,5 @@
 <?php
-namespace Legioner\City;
+namespace Legion\City;
 
 use
     Bitrix\Main\Type,

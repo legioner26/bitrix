@@ -7,17 +7,17 @@ use \Bitrix\Main\ModuleManager,
     \Bitrix\Main\EventManager,
     \Bitrix\Main\Entity\Base,
     \Bitrix\Main\Application,
-    \Legioner\City\CityTestTable,
+    \Legion\City\CityTestTable,
     \Bitrix\Main\Loader;
 
 Loc::loadMessages(__FILE__);
-if (class_exists('legioner_city'))
+if (class_exists('legion_city'))
     return;
 
 /**
  * @ Class legioner_test
  */
-class legioner_city extends CModule
+class legion_city extends CModule
 {
     //   public $exclusionAdminAdminFiles;
 
@@ -35,7 +35,7 @@ class legioner_city extends CModule
              'operation_description.php',
              'task_description.php',
          );*/
-        $this->MODULE_ID = 'legioner.city';
+        $this->MODULE_ID = 'legion.city';
         $this->MODULE_NAME = Loc::getMessage("LEGIONER_TEST_MODULE_NAME");
         $this->MODULE_DESCRIPTION = Loc::getMessage("LEGIONER_TEST_MODULE_DESCRIPTION");
         $this->PARTNER_NAME = Loc::getMessage("LEGIONER_TEST_PARTNER_NAME");
@@ -106,8 +106,8 @@ class legioner_city extends CModule
     public function InstallDB()
     {
         Loader::includeModule($this->MODULE_ID);
-        if(!Application::getConnection(CityTestTable::getConnectionName())->isTableExists(Base::getInstance('\Legioner\City\CityTestTable')->getDBTableName())) {
-            Base::getInstance('\Legioner\City\CityTestTable')->createDbTable();
+        if(!Application::getConnection(CityTestTable::getConnectionName())->isTableExists(Base::getInstance('\Legion\City\CityTestTable')->getDBTableName())) {
+            Base::getInstance('\Legion\City\CityTestTable')->createDbTable();
             //демо данные
             $resultDemo = json_decode($this->GetPath() . "/demo.json",true);
            if (!empty($resultDemo)) {
