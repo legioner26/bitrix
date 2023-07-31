@@ -114,12 +114,14 @@ class legion_city extends \CModule
             
            if (!empty($resultDemo)) {
                foreach ($resultDemo as $value) {
+
                    $result = CityTestTable::add(array(
                        'CITY_NAME' => $value['CITY_NAME'],
                        'CITY_PROFIT' => $value['CITY_PROFIT'],
                        'CITY_EXPENSES' => $value['CITY_EXPENSES'],
                        'CITY_COUNT' => $value['CITY_COUNT'],
                    ));
+
                    if ($result->getErrorMessages()) {
                        echo 'Ошибка при добавлении записи: ' . implode(', ', $result->getErrorMessages());
                    }
@@ -133,7 +135,7 @@ class legion_city extends \CModule
     {
         Loader::includeModule($this->MODULE_ID);
         Application::getConnection(CityTestTable::getConnectionName())->
-            queryExecute('drop table if exists'.Base::getInstance('\Legioner\City\CityTestTable')->getDBTableName());
+            queryExecute('drop table if exists '.Base::getInstance('\Legion\City\CityTestTable')->getDBTableName());
         Option::delete($this->MODULE_ID);
     }
 
