@@ -1,5 +1,5 @@
 <?php
-namespace Legioner\Test;
+namespace Legioner\City;
 
 use
     Bitrix\Main\Type,
@@ -8,7 +8,7 @@ use
     Bitrix\Main\ORM\Fields\FloatField,
     Bitrix\Main\ORM\Fields\StringField;
 
-class CityTable extends DataManager
+class CityTestTable extends DataManager
 {
     public static function getTableName()
     {
