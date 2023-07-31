@@ -106,10 +106,12 @@ class legion_city extends \CModule
     public function InstallDB()
     {
         Loader::includeModule($this->MODULE_ID);
+
         if(!Application::getConnection(CityTestTable::getConnectionName())->isTableExists(Base::getInstance('\Legion\City\CityTestTable')->getDBTableName())) {
             Base::getInstance('\Legion\City\CityTestTable')->createDbTable();
             //демо данные
-            $resultDemo = json_decode($this->GetPath() . "/demo.json",true);
+            $resultDemo = json_decode(file_get_contents($this->GetPath() . "/demo.json"),true);
+            
            if (!empty($resultDemo)) {
                foreach ($resultDemo as $value) {
                    $result = CityTestTable::add(array(
