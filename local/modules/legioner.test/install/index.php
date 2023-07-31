@@ -18,7 +18,7 @@ if (class_exists('legioner_test'))
  */
 class legioner_test extends \CModule
 {
- //   public $exclusionAdminAdminFiles;
+    //   public $exclusionAdminAdminFiles;
 
     /**
      * dssl_form constructor.
@@ -27,13 +27,13 @@ class legioner_test extends \CModule
     {
         $arModuleVersion = array();
         include __DIR__ . '/version.php';
-       /* $this->exclusionAdminAdminFiles = array(
-            '..',
-            '.',
-            'menu.php',
-            'operation_description.php',
-            'task_description.php',
-        );*/
+        /* $this->exclusionAdminAdminFiles = array(
+             '..',
+             '.',
+             'menu.php',
+             'operation_description.php',
+             'task_description.php',
+         );*/
         $this->MODULE_ID = 'legioner.test';
         $this->MODULE_NAME = Loc::getMessage("LEGIONER_TEST_MODULE_NAME");
         $this->MODULE_DESCRIPTION = Loc::getMessage("LEGIONER_TEST_MODULE_DESCRIPTION");
@@ -51,7 +51,7 @@ class legioner_test extends \CModule
     public function GetPath($notDocumentRoot = false)
     {
         if ($notDocumentRoot) {
-            return str_ireplace(Application::getDocumentRoot(),'',dirname(__DIR__));
+            return str_ireplace(Application::getDocumentRoot(), '', dirname(__DIR__));
         } else {
             return dirname(__DIR__);
         }
@@ -70,7 +70,7 @@ class legioner_test extends \CModule
         if ($this->isVersionD7()) {
             $this->InstallDB();
             $this->InstallEvents();
-         //   $this->InstallFiles();
+            $this->InstallFiles();
             ModuleManager::registerModule($this->MODULE_ID);
         } else {
             $APPLICATION->ThrowException(Loc::getMessage("LEGIONER_TEST_ERROR_D7"));
@@ -90,7 +90,7 @@ class legioner_test extends \CModule
         if ($request['step'] < 2) {
             $APPLICATION->IncludeAdminFile(Loc::getMessage("LEGIONER_TEST_UNINSTALL_TITLE"), $this->GetPath() . "/install/unstep1.php");
         } elseif ($request['step'] == 2) {
-          //  $this->UnInstallFiles();
+            $this->UnInstallFiles();
             $this->UnInstallEvents();
             if ($request['savedata'] != 'Y') {
                 $this->UnInstallDB();
@@ -100,5 +100,41 @@ class legioner_test extends \CModule
             $APPLICATION->IncludeAdminFile(Loc::getMessage("LEGIONER_TEST_UNINSTALL_TITLE"), $this->GetPath() . "/install/unstep2.php");
         }
 
+    }
+
+    public function InstallDB()
+    {
+        Loader::includeModule($this->MODULE_ID);
+        if(!Application::getConnection(\Legioner\Test\SityTestTable::getConnectionName())->isTableExists(Base::getInstance('\Legioner\Test\SityTestTable')->getDBTableName())) {
+            Base::getInstance('\Legioner\Test\SityTestTable')->createDbTable();
+        }
+    }
+
+    public function UnInstallDB()
+    {
+        Loader::includeModule($this->MODULE_ID);
+        Application::getConnection(\Legioner\Test\SityTestTable::getConnectionName())->
+            queryExecute('drop table if exists'.Base::getInstance('\Legioner\Test\SityTestTable')->getDBTableName());
+        Option::delete($this->MODULE_ID);
+    }
+
+    public function InstallEvents()
+    {
+        return true;
+    }
+
+    public function UnInstallEvents()
+    {
+        return true;
+    }
+
+    public function InstallFiles()
+    {
+        return true;
+    }
+
+    public function UnInstallFiles()
+    {
+        return true;
     }
 }
