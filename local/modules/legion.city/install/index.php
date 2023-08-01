@@ -22,7 +22,7 @@ class legion_city extends CModule
     //   public $exclusionAdminAdminFiles;
 
     /**
-     * dssl_form constructor.
+     * legion_city constructor.
      */
     function __construct()
     {
