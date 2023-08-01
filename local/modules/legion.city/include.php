@@ -1,2 +1,8 @@
-<?php
-defined('B_PROLOG_INCLUDED') and (B_PROLOG_INCLUDED === true) or die();
+<?
+    \Bitrix\Main\Loader::registerAutoLoadClasses(
+// имя модуля
+        "legion.city",
+        array(
+            "Legion\\City\\CityTable" => "lib/city.php",
+        )
+    );

@@ -1,5 +1,5 @@
 <?php
-require_once dirname(dirname(__FILE__)) . "/lib/CityTest.php";
+
 use \Bitrix\Main\ModuleManager,
     \Bitrix\Main\Localization\Loc,
     \Bitrix\Main\Config as Conf,
@@ -7,7 +7,7 @@ use \Bitrix\Main\ModuleManager,
     \Bitrix\Main\EventManager,
     \Bitrix\Main\Entity\Base,
     \Bitrix\Main\Application,
-    \Legion\City\CityTestTable,
+    \Legion\City\CityTable,
     \Bitrix\Main\Loader;
 
 Loc::loadMessages(__FILE__);
@@ -17,7 +17,7 @@ if (class_exists('legion_city'))
 /**
  * @ Class legioner_test
  */
-class legion_city extends \CModule
+class legion_city extends CModule
 {
     //   public $exclusionAdminAdminFiles;
 
@@ -69,10 +69,11 @@ class legion_city extends \CModule
     {
         global $APPLICATION;
         if ($this->isVersionD7()) {
-            $this->InstallDB();
+
             $this->InstallEvents();
             $this->InstallFiles();
             ModuleManager::registerModule($this->MODULE_ID);
+            $this->InstallDB();
         } else {
             $APPLICATION->ThrowException(Loc::getMessage("LEGIONER_TEST_ERROR_D7"));
         }
@@ -107,15 +108,15 @@ class legion_city extends \CModule
     {
         Loader::includeModule($this->MODULE_ID);
 
-        if(!Application::getConnection(CityTestTable::getConnectionName())->isTableExists(Base::getInstance('\Legion\City\CityTestTable')->getDBTableName())) {
-            Base::getInstance('\Legion\City\CityTestTable')->createDbTable();
+        if(!Application::getConnection(CityTable::getConnectionName())->isTableExists(Base::getInstance('\Legion\City\CityTable')->getDBTableName())) {
+            Base::getInstance('\Legion\City\CityTable')->createDbTable();
             //демо данные
             $resultDemo = json_decode(file_get_contents($this->GetPath() . "/demo.json"),true);
             
            if (!empty($resultDemo)) {
                foreach ($resultDemo as $value) {
 
-                   $result = CityTestTable::add(array(
+                   $result = CityTable::add(array(
                        'CITY_NAME' => $value['CITY_NAME'],
                        'CITY_PROFIT' => $value['CITY_PROFIT'],
                        'CITY_EXPENSES' => $value['CITY_EXPENSES'],
@@ -134,8 +135,8 @@ class legion_city extends \CModule
     public function UnInstallDB()
     {
         Loader::includeModule($this->MODULE_ID);
-        Application::getConnection(CityTestTable::getConnectionName())->
-            queryExecute('drop table if exists '.Base::getInstance('\Legion\City\CityTestTable')->getDBTableName());
+        Application::getConnection(CityTable::getConnectionName())->
+            queryExecute('drop table if exists '.Base::getInstance('\Legion\City\CityTable')->getDBTableName());
         Option::delete($this->MODULE_ID);
     }
 

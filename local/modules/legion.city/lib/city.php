@@ -8,7 +8,7 @@ use
     Bitrix\Main\ORM\Fields\FloatField,
     Bitrix\Main\ORM\Fields\StringField;
 
-class CityTestTable extends DataManager
+class CityTable extends DataManager
 {
     public static function getTableName()
     {
