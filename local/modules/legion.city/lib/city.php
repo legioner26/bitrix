@@ -30,7 +30,8 @@ class CityTable extends DataManager
             ),
             //Название города
             new StringField('CITY_NAME',[
-                'required' => true
+                'required' => true,
+
             ]),
             //Доходы
             new FloatField('CITY_PROFIT',[
